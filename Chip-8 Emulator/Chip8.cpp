@@ -1,4 +1,9 @@
+#include <iostream>
+#include <fstream>
+#include <string>
 #include "Chip8.h"
+
+using namespace std;
 
 Chip8::Chip8()
 {
@@ -21,17 +26,36 @@ Chip8::Chip8()
 	// Reset timers
 }
 
-void Chip8::loadGame(std::string game)
+void Chip8::loadGame(string game)
 {
 	// Game selection
-	int bufferSize = 0;
-	char* buffer = new char[0];
+	ifstream gameFile;
+	gameFile.open("Games/" + game + ".ch8", ios::ate | ios::out | ios::binary);
 
-	// We load the game starting at the location 0x200 (which is equal to 512)
-	for (int i = 0; i < bufferSize; ++i)
+	string line;
+	int counter = 0;
+
+	if (gameFile.is_open())
 	{
-		memory[i + 512] = buffer[i];
+		int bufferSize = gameFile.tellg();
+		char* buffer = new char[bufferSize];
+
+		gameFile.seekg(0, ios::beg);
+		gameFile.read(buffer, bufferSize);
+
+		for (int i = 0; i < bufferSize; i++)
+		{
+			memory[512 + i] = buffer[i];
+		}
+
+		printf("Game file '%s.ch8' (%d bytes) loaded.\n", game.c_str(), bufferSize);
 	}
+	else
+	{
+		printf("Cannot open file: '%s.ch8'.\n", game.c_str());
+	}
+
+	gameFile.close();
 }
 
 void Chip8::emulateCycle()
@@ -98,23 +122,5 @@ void Chip8::emulateCycle()
 		}
 
 		--sound_timer;
-	}
-}
-
-void Chip8::launch()
-{
-	// Emulation loop
-	for (;;)
-	{
-		// Emulate one cycle
-		emulateCycle();
-
-		// If the draw flag is set, update the screen
-		if (drawFlag)
-		{
-			// todo
-		}
-
-		// Store key press state (Press and Release)
 	}
 }

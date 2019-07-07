@@ -41,19 +41,16 @@ private:
 	// Stack pointer. The stack is used to remember the current location before a jump is performed.
 	unsigned short sp;
 
+public:
 	// Refresh screen if true.
 	bool drawFlag;
 
-	// Emulates a Chip8 cycle.
-	void emulateCycle();
-
-public:
 	// Initializes the emulator.
 	Chip8();
 
 	// Loads the selected game.
 	void loadGame(std::string game);
 
-	// Launches the emulator.
-	void launch();
+	// Emulates a Chip8 cycle.
+	void emulateCycle();
 };

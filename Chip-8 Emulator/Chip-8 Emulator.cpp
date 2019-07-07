@@ -1,16 +1,19 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
-#include "chip8.h"
+#include "Chip8.h"
 
 int main(int argc, char** argv)
 {
+	Chip8 chip8;
+	chip8.loadGame("Landing");
+
 	GLFWwindow* window;
 
-	/* Initialize the library */
+	// Initialize the library
 	if (!glfwInit())
 		return -1;
 
-	/* Create a windowed mode window and its OpenGL context */
+	// Create a windowed mode window and its OpenGL context
 	window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
 	if (!window)
 	{
@@ -18,12 +21,23 @@ int main(int argc, char** argv)
 		return -1;
 	}
 
-	/* Make the window's context current */
+	// Make the window's context current
 	glfwMakeContextCurrent(window);
 
-	/* Loop until the user closes the window */
+	// Loop until the user closes the window
 	while (!glfwWindowShouldClose(window))
 	{
+		// Emulate one cycle
+		chip8.emulateCycle();
+
+		// If the draw flag is set, update the screen
+		if (chip8.drawFlag)
+		{
+			// todo
+		}
+
+		// Store key press state (Press and Release)
+
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT);
 
@@ -35,10 +49,4 @@ int main(int argc, char** argv)
 	}
 
 	glfwTerminate();
-
-	std::cout << "Lauching Chip-8 Emulator, have fun!\n";
-
-	Chip8 chip8;
-	// chip8.loadGame("Test");
-	// chip8.launch();
 }

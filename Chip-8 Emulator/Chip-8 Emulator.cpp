@@ -1,11 +1,44 @@
+#include <GLFW/glfw3.h>
 #include <iostream>
-#include "C:\Users\aurel\Documents\GitHub\Chip8Emulator\chip8.hpp"
+#include "chip8.h"
 
-int main()
+int main(int argc, char** argv)
 {
+	GLFWwindow* window;
+
+	/* Initialize the library */
+	if (!glfwInit())
+		return -1;
+
+	/* Create a windowed mode window and its OpenGL context */
+	window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+	if (!window)
+	{
+		glfwTerminate();
+		return -1;
+	}
+
+	/* Make the window's context current */
+	glfwMakeContextCurrent(window);
+
+	/* Loop until the user closes the window */
+	while (!glfwWindowShouldClose(window))
+	{
+		/* Render here */
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		/* Swap front and back buffers */
+		glfwSwapBuffers(window);
+
+		/* Poll for and process events */
+		glfwPollEvents();
+	}
+
+	glfwTerminate();
+
 	std::cout << "Lauching Chip-8 Emulator, have fun!\n";
 
-	// Chip8 chip8;
+	Chip8 chip8;
 	// chip8.loadGame("Test");
 	// chip8.launch();
 }

@@ -42,18 +42,18 @@ void Chip8::emulateCycle()
 	// Decoding upcode
 	switch (opcode & 0xF000)
 	{
-		// Calls subroutine at NNN
+	// Calls subroutine at NNN
 	case 0x2000:
 		stack[sp] = pc;
 		++sp;
 		pc = opcode & 0x0FFF;
 		break;
 
-		// Bit and math operations
+	// Bit and math operations
 	case 0x8000:
 		switch (opcode & 0x000F)
 		{
-			// 8XY4 : Adds VY to VX. VF is set to 1 when there's a carry, and to 0 when there isn't
+		// 8XY4 : Adds VY to VX. VF is set to 1 when there's a carry, and to 0 when there isn't
 		case 0x0004:
 			unsigned char xIndex = (opcode & 0x00F0) >> 4;
 			unsigned char yIndex = (opcode & 0x0F00) >> 8;
@@ -73,7 +73,7 @@ void Chip8::emulateCycle()
 		}
 		break;
 
-		// ANNN : Sets I to the address NNN
+	// ANNN : Sets I to the address NNN
 	case 0xA000:
 		I = opcode & 0x0FFF;
 		pc += 2;
@@ -103,8 +103,6 @@ void Chip8::emulateCycle()
 
 void Chip8::launch()
 {
-	// Set up render system and register input callbacks
-
 	// Emulation loop
 	for (;;)
 	{

@@ -163,7 +163,10 @@
     <ClInclude Include="Chip8.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Games\emulator_logo.ch8" />
+    <None Include="Games\invaders.c8" />
     <None Include="Games\Landing.ch8" />
+    <None Include="Games\pong2.c8" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -30,5 +30,12 @@
     <None Include="Games\Landing.ch8">
       <Filter>Games</Filter>
     </None>
+    <None Include="Games\pong2.c8">
+      <Filter>Games</Filter>
+    </None>
+    <None Include="Games\invaders.c8">
+      <Filter>Games</Filter>
+    </None>
+    <None Include="Games\emulator_logo.ch8" />
   </ItemGroup>
 </Project>

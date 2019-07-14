@@ -1,10 +1,11 @@
+#include <GLFW/glfw3.h>
 #include <string>
 
 class Chip8
 {
 private:
 	// Current opcode.
-	unsigned short opcode;
+	uint16_t opcode = 0;
 
 	/**
 	 * Memory map:
@@ -12,38 +13,41 @@ private:
 	 * 0x050-0x0A0 - Used for the built in 4x5 pixel font set (0-F)
 	 * 0x200-0xFFF - Program ROM and work RAM
 	 */
-	unsigned char memory[4096];
+	uint8_t* memory = new uint8_t[4096];
 
 	// CPU general purpose registers : V0, V1 to V15 and VE for the carry flag.
-	unsigned char V[16];
+	uint8_t* V = new uint8_t[16];
 
 	// Index register that can have values from 0x000 to 0xFFF.
-	unsigned short I;
+	uint16_t I = 0;
 
 	// Program counter that can have values from 0x000 to 0xFFF.
-	unsigned short pc;
+	uint16_t pc = 0x200;
 
 	// Pixel in array is either 1 or 0.
-	unsigned char gfx[64 * 32];
+	uint8_t gfx[32][64];
 
 	// Delay timer : when set above 0 will start count down at 60 Hz.
-	unsigned char delay_timer;
+	uint8_t delay_timer = 0;
 
 	// Sound timer : when set above 0 will start count down at 60 Hz and make buzzing sound.
-	unsigned char sound_timer;
+	uint8_t sound_timer = 0;
 
 	// Hex type keyboard (0x0-0xF).
-	unsigned char key[16];
+	uint8_t* key = new uint8_t[16];
 
 	// The stack is used to remember the current location before a jump is performed.
-	unsigned short stack[16];
+	uint16_t* stack = new uint16_t[16];
 
 	// Stack pointer. The stack is used to remember the current location before a jump is performed.
-	unsigned short sp;
+	uint16_t sp = 0;
+
+	// Refresh screen if true.
+	bool drawFlag = false;
 
 public:
-	// Refresh screen if true.
-	bool drawFlag;
+	// Emulator's window.
+	GLFWwindow* window;
 
 	// Initializes the emulator.
 	Chip8();
@@ -53,4 +57,8 @@ public:
 
 	// Emulates a Chip8 cycle.
 	void emulateCycle();
+
+	// Launchs the emulator
+	void launch();
+
 };
